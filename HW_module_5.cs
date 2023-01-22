@@ -41,7 +41,7 @@ static void PrintData(string name, string surname, int age, bool havePet, int qP
 //метод с возвращаемым кортежем данных о пользователе
         static (string name, string surname, int age, bool havePet, int qPet, string[] favColors, string[] nicknamesOfPets) UsrData()
         {
-            bool havePet = false;
+            bool havePet;
 
             Console.Write("Enter your name: ");
             string name = CorrectiveString(Console.ReadLine());
@@ -54,22 +54,26 @@ static void PrintData(string name, string surname, int age, bool havePet, int qP
 
             Console.Write("how many favourite colors?: ");
             string[] favColors = FavColors(Corrective(Console.ReadLine()));
-            
-            Console.Write("Have a pet?(y/n): ");
-            char choice = Convert.ToChar(Console.ReadLine());
+
             int qPet;
-            if (choice == 'y')
-            {
-                havePet = true;
-                Console.Write("how many?:");
-                qPet = Corrective(Console.ReadLine());
-                
-            }
-            else
-            {
-                havePet = false;
-                qPet = 0;
-            }
+            Console.Write("Have a pet?(y/n): ");
+            char choice = CorrectiveChoice(Console.ReadLine());
+            
+
+                if (choice == 'y')
+                {
+                    havePet = true;
+                    Console.Write("how many?:");
+                    qPet = Corrective(Console.ReadLine());
+
+                }
+                else
+                {
+                    havePet = false;
+                    qPet = 0;
+                }
+            
+            //while (choice != 'y' | choice != 'n');
             string[] nicknamesOfPets = Pets(qPet);
 
 
@@ -105,8 +109,7 @@ static void PrintData(string name, string surname, int age, bool havePet, int qP
 //метод проверяющий корректность ввода для числоввых данных 
         static int Corrective(string xParse)
         {
-            int num;
-            bool xyz = int.TryParse(xParse, out num);
+            bool xyz = int.TryParse(xParse, out int num);
             int abc;
             if (num > 0)
             {
@@ -116,25 +119,19 @@ static void PrintData(string name, string surname, int age, bool havePet, int qP
             {
                 do
                 {
-                    //if (xyz != true & num <= 0)
-                    //{
                     Console.WriteLine("error!");
                     Console.Write("incorrect data! enter again!: ");
                     xParse = Console.ReadLine();
                     xyz = int.TryParse(xParse, out abc);
-                    //abc = num;
-                    //}
                 } while (xyz == false & abc <= 0);
                 return abc;
             }
         }
 
-//метод проверяющий корректность ввода для числоввых данных 
+//метод проверяющий корректность ввода для строковых данных 
         static string CorrectiveString(string sParse)
         {
-            int num;
-            bool xyz = int.TryParse(sParse, out num);
-            int abc;
+            bool xyz = int.TryParse(sParse, out int num);
             if (xyz == false)
             {
                 return sParse;
@@ -146,12 +143,38 @@ static void PrintData(string name, string surname, int age, bool havePet, int qP
                     Console.WriteLine("error!");
                     Console.Write("incorrect data! enter again!: ");
                     sParse = Console.ReadLine();
-                    xyz = int.TryParse(sParse, out abc);
+                    xyz = int.TryParse(sParse, out int abc);
                 } while (xyz == true);
                 return sParse;
             }
         }
-    } 
+
+//метод проверяющий введен символ или строка
+        static char CorrectiveChoice(string choice)
+        {
+            char b;
+            bool c = char.TryParse(choice, out char result);
+            if (c == true & (result == 'y' | result == 'n'))
+            {
+                return result;
+            }
+            else
+            {
+                do
+                {
+                    Console.WriteLine("error!");
+                    Console.Write("incorrect data! enter again!(y/n): ");
+                    choice = Console.ReadLine();
+                    c = char.TryParse(choice, out b);
+                    if (b == 'y' | b == 'n')
+                    {
+                        return b;
+                    }
+                } while ((c == false) | (b != 'y' | b != 'n')); //повторяется, если условие в скобках выполнено
+                return b;
+            }
+        }
+    }
 }
 
 
