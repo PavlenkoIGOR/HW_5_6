@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ex_5_6_HW
+namespace Ex_5_6_HW
 {
     internal class HW_module_5
     {
@@ -16,8 +16,8 @@ namespace ex_5_6_HW
             Console.ReadKey();
         }
 
-//метод выводящий на экран кортеж
-static void PrintData(string name, string surname, int age, bool havePet, int qPet, string[] favColors, string[] nicknamesOfPets)
+        ///метод выводящий на экран кортеж
+        static void PrintData(string name, string surname, int age, bool havePet, int qPet, string[] favColors, string[] nicknamesOfPets)
         {
             Console.WriteLine("\t\tИмя: {0}", name);
             Console.WriteLine("\t\tФамилия: {0}", surname);
@@ -26,19 +26,19 @@ static void PrintData(string name, string surname, int age, bool havePet, int qP
             int i = 0;
             foreach (var item in favColors)
             {
-                Console.WriteLine($"\t\tЛюбимый цвет №{i+1}: " + favColors[i]);
+                Console.WriteLine($"\t\tЛюбимый цвет №{i + 1}: " + favColors[i]);
                 i++;
             }
             int n = 0;
             foreach (var item in nicknamesOfPets)
             {
-                Console.WriteLine($"\t\tКличка животного №{n+1}: " + nicknamesOfPets[n]);
+                Console.WriteLine($"\t\tКличка животного №{n + 1}: " + nicknamesOfPets[n]);
                 n++;
             }
 
         }
 
-//метод с возвращаемым кортежем данных о пользователе
+        ///метод с возвращаемым кортежем данных о пользователе
         static (string name, string surname, int age, bool havePet, int qPet, string[] favColors, string[] nicknamesOfPets) UsrData()
         {
             bool havePet;
@@ -58,55 +58,49 @@ static void PrintData(string name, string surname, int age, bool havePet, int qP
             int qPet;
             Console.Write("Have a pet?(y/n): ");
             char choice = CorrectiveChoice(Console.ReadLine());
-            
+            if (choice == 'y')
+            {
+                havePet = true;
+                Console.Write("how many?:");
+                qPet = Corrective(Console.ReadLine());
 
-                if (choice == 'y')
-                {
-                    havePet = true;
-                    Console.Write("how many?:");
-                    qPet = Corrective(Console.ReadLine());
-
-                }
-                else
-                {
-                    havePet = false;
-                    qPet = 0;
-                }
-            
-            //while (choice != 'y' | choice != 'n');
+            }
+            else
+            {
+                havePet = false;
+                qPet = 0;
+            }
             string[] nicknamesOfPets = Pets(qPet);
-
-
             var result = (name, surname, age, havePet, qPet, favColors, nicknamesOfPets);
 
             return result;
         }
 
-//метод, хранящий введенные цвета
+        ///метод, хранящий введенные цвета
         static string[] FavColors(int q)
         {
-            string [] favColors = new string[q];
+            string[] favColors = new string[q];
             for (int i = 0; i < q; i++)
             {
-                Console.Write($"\tfavourite color {i+1}: ");
-                 favColors[i] = Console.ReadLine();
+                Console.Write($"\tfavourite color {i + 1}: ");
+                favColors[i] = Console.ReadLine();
             }
             return favColors;
         }
 
-//метод с данными о питомцах
+        ///метод с данными о питомцах
         static string[] Pets(int q)
         {
             var nicknames = new string[q];
             for (int i = 0; i < nicknames.Length; i++)
             {
-                Console.Write($"\tenter nickname {i+1}: ");
+                Console.Write($"\tenter nickname {i + 1}: ");
                 nicknames[i] = Console.ReadLine();
             }
             return nicknames;
         }
 
-//метод проверяющий корректность ввода для числоввых данных 
+        ///метод проверяющий корректность ввода для числоввых данных 
         static int Corrective(string xParse)
         {
             bool xyz = int.TryParse(xParse, out int num);
@@ -128,7 +122,7 @@ static void PrintData(string name, string surname, int age, bool havePet, int qP
             }
         }
 
-//метод проверяющий корректность ввода для строковых данных 
+        ///метод проверяющий корректность ввода для строковых данных 
         static string CorrectiveString(string sParse)
         {
             bool xyz = int.TryParse(sParse, out int num);
@@ -149,7 +143,7 @@ static void PrintData(string name, string surname, int age, bool havePet, int qP
             }
         }
 
-//метод проверяющий введен символ или строка
+        ///метод проверяющий введен символ или строка
         static char CorrectiveChoice(string choice)
         {
             char b;
